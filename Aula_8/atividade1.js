@@ -35,7 +35,6 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-
 rl.question("Digite sua idade: ", function (idade) {
     if (idade >= 1 && idade <= 12) {
         console.log("Criança");
