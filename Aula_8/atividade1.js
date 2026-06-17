@@ -1,4 +1,4 @@
-//Lucas e Pedro
+//Lucas 
 
 const readline = require('readline');
 
