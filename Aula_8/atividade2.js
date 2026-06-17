@@ -1,4 +1,4 @@
-//Lucas
+//Lucas 
 
 const readline = require('readline');
 
@@ -25,4 +25,37 @@ rl.question('Qual o valor da compra? ', function (compra) {
         console.log("Este número é inválido.");
     }
     rl.close();
+});
+
+//Pedro
+
+const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Digite seu preço: ", function (preco) {
+    if (preco <= 50) {
+        console.log("Sem desconto. ");
+    }
+
+    else if (preco >= 51 && preco <= 100) {
+        resultado = preco * 0.1;
+        total = preco - resultado;
+        console.log("Total com desconto: ", total, "\nVocê recebeu 10% de desconto.");
+    }
+
+    else if (preco >= 101 && preco <= 200) {
+        resultado = preco * 0.2;
+        total = preco - resultado;
+        console.log("Total com desconto:", total, "\nVocê recebeu 20% de desconto.");
+    }
+
+    else if (preco >= 201 && preco <= 1000) {
+        resultado = preco * 0.3;
+        total = preco - resultado;
+        console.log("Total com desconto: ", total, "\nVocê recebeu 30% de desconto.");
+    } rl.close();
 });

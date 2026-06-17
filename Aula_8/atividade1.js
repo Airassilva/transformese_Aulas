@@ -1,4 +1,4 @@
-//Lucas
+//Lucas e Pedro
 
 const readline = require('readline');
 
@@ -22,6 +22,32 @@ rl.question('Qual o sua idade? ', function (idade) {
         console.log("Idoso");
     } else {
         console.log("Este número é inválido.");
+    }
+    rl.close();
+});
+
+//Pedro
+
+const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+
+rl.question("Digite sua idade: ", function (idade) {
+    if (idade >= 1 && idade <= 12) {
+        console.log("Criança");
+    } else if (idade >= 12 && idade <= 17) {
+        console.log("Adolescente");
+    } else if (idade >= 18 && idade <= 59) {
+        console.log("Adulto")
+    } else if (idade >= 60 && idade <= 110) {
+        console.log("Idoso")
+    } else {
+        console.log("Idade inválida ")
+
     }
     rl.close();
 });
