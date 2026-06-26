@@ -1,15 +1,13 @@
-const readline = require("readline");
-    
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+//Heloisa e Lucas
 
-let numerosSorteados;
+let numero = 0;
+let tentativas = 0;
 
-function sortearNumero() {
-    numeroSorteado = Math.floor(Math.random() * 10) + 1;
-    console.log(`Número sorteado: ${numeroSorteado}`);
+while (numero <= 60) {
+    numero = Math.floor(Math.random() * 75) + 1;
+    tentativas++;
+
+    console.log(`Sorteio ${tentativas}: ${numero}`);
 }
 
-sortearNumero();
+console.log(`Foi necessário ${tentativas} tentativa(s).`);
