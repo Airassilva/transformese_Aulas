@@ -16,7 +16,28 @@ function sortearNumero() { }
  *   `jogadores` com nome e `numerosMarcados` vazio, e chama a si mesma
  *   com `restantes - 1`.
  */
-function pedirNomeJogador(restantes) { }
+function pedirNomeJogador(restantes) {
+
+    if (restantes === 0) {
+
+        console.log("Jogadores cadastrados:");
+
+        for (let i = 0; i < jogadores.length; i++) {
+            console.log(jogadores[i].nome);
+        }
+
+        return;
+    }
+
+    let nome = prompt("Digite o nome do jogador:");
+
+    jogadores.push({
+        nome: nome,
+        numerosMarcados: []
+    });
+
+    pedirNomeJogador(restantes - 1);
+}
 
 /**
  * - Recebe `indiceJogador`: índice do jogador atual no array `jogadores`.
@@ -30,4 +51,33 @@ function pedirNomeJogador(restantes) { }
  *     - Outro valor: exibe mensagem de erro e repete a pergunta para o mesmo jogador.
  * - Ao finalizar, chama a si mesma com `indiceJogador + 1` para o próximo jogador.
  */
-function verificarMarcacao(indiceJogador, numeroSorteado) { }
+function verificarMarcacao(indiceJogador, numeroSorteado) {
+
+    if (indiceJogador >= jogadores.length) {
+        sortearNumero();
+        return;
+    }
+
+    let resposta = prompt(
+        `Jogador ${indiceJogador + 1}, você marcou o número ${numeroSorteado}? (S/N)`
+    );
+
+    if (resposta === "S" || resposta === "s") {
+
+        jogadores[indiceJogador].numerosMarcados.push(numeroSorteado);
+
+
+        verificarMarcacao(indiceJogador + 1, numeroSorteado);
+
+    } else if (resposta === "N" || resposta === "n") {
+
+        verificarMarcacao(indiceJogador + 1, numeroSorteado);
+
+    } else {
+
+        alert("Resposta inválida! Digite apenas S ou N.");
+
+
+        verificarMarcacao(indiceJogador, numeroSorteado);
+    }
+}
