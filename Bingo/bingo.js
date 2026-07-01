@@ -51,6 +51,7 @@ function verificarMarcacao(indiceJogador, numeroSorteado) {
         sortearNumero();
         return;
     }
+    
     let resposta = prompt(
         `Jogador ${indiceJogador + 1}, você marcou o número ${numeroSorteado}? (S/N)`
     );
