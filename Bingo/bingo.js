@@ -6,7 +6,27 @@
  * - Exibe o número sorteado no console.
  * - Chama `verificarMarcacao` passando o índice 0 e o número sorteado.
  */
-function sortearNumero() { }
+function sortearNumero() {
+    if (acabou || numerosSorteados.length === 75) {
+        acabou = true;
+        console.log("O jogo TERMINOU!");
+        rl.close();
+        return;
+    }
+ 
+    while (!acabou) {
+        let numeroSorteado = Math.floor(Math.random() * 75) + 1;
+        if (!numerosSorteados.includes(numeroSorteado)) {
+            numerosSorteados.push(numeroSorteado);
+            console.log(`Número sorteado: ${numeroSorteado}`);  
+            verificarMarcacao(0, numeroSorteado);
+            if (numerosSorteados.length === 75) {
+                acabou = true;
+            }
+            break;
+        }
+    }
+}
 
 /**
  * - Recebe `restantes`: quantos jogadores ainda precisam ser cadastrados.
