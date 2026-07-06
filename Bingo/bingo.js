@@ -1,3 +1,15 @@
+const NOME_EVENTO = "Bingo dos Garotes!!!!"
+let acabou = false;
+let numerosSorteados = [];
+let jogadores = [];
+
+const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 /**
  * - Verifica se o jogo já acabou ou se todos os 75 números já foram sorteados;
  *   se sim, exibe mensagem de fim de jogo e encerra.
@@ -13,12 +25,12 @@ function sortearNumero() {
         rl.close();
         return;
     }
- 
+
     while (!acabou) {
         let numeroSorteado = Math.floor(Math.random() * 75) + 1;
         if (!numerosSorteados.includes(numeroSorteado)) {
             numerosSorteados.push(numeroSorteado);
-            console.log(`Número sorteado: ${numeroSorteado}`);  
+            console.log(`Número sorteado: ${numeroSorteado}`);
             verificarMarcacao(0, numeroSorteado);
             if (numerosSorteados.length === 75) {
                 acabou = true;
@@ -37,20 +49,21 @@ function sortearNumero() {
  *   com `restantes - 1`.
  */
 function pedirNomeJogador(restantes) {
-
     if (restantes === 0) {
-        console.log("Jogadores cadastrados:");
+        console.log("\nJogadores cadastrados:");
         for (let i = 0; i < jogadores.length; i++) {
-            console.log(jogadores[i].nome);
+            console.log(`- ${jogadores[i].nome}`);
         }
+        console.log("O jogo já pode começar!\n");
+        sortearNumero();
         return;
     }
-    let nome = prompt("Digite o nome do jogador:");
-    jogadores.push({
-        nome: nome,
-        numerosMarcados: []
+
+    rl.question(`Digite o nome do jogador ${jogadores.length + 1}: `, function (nome) {
+        jogadores.push({ nome: nome, numerosMarcados: [] });
+        console.log(`O jogador ${nome} foi adicionado ao jogo!`);
+        pedirNomeJogador(restantes - 1);
     });
-    pedirNomeJogador(restantes - 1);
 }
 
 /**
@@ -66,23 +79,36 @@ function pedirNomeJogador(restantes) {
  * - Ao finalizar, chama a si mesma com `indiceJogador + 1` para o próximo jogador.
  */
 function verificarMarcacao(indiceJogador, numeroSorteado) {
-
     if (indiceJogador >= jogadores.length) {
         sortearNumero();
         return;
     }
-    
-    let resposta = prompt(
-        `Jogador ${indiceJogador + 1}, você marcou o número ${numeroSorteado}? (S/N)`
-    );
 
-    if (resposta === "S" || resposta === "s") {
-        jogadores[indiceJogador].numerosMarcados.push(numeroSorteado);
-        verificarMarcacao(indiceJogador + 1, numeroSorteado);
-    } else if (resposta === "N" || resposta === "n") {
-        verificarMarcacao(indiceJogador + 1, numeroSorteado);
-    } else {
-        alert("Resposta inválida! Digite apenas S ou N.");
-        verificarMarcacao(indiceJogador, numeroSorteado);
-    }
+    const jogador = jogadores[indiceJogador];
+
+    rl.question(`O jogador ${jogador.nome} marcou o número ${numeroSorteado}? (S/N): `, function (resposta) {
+        if (resposta === "S" || resposta === "s") {
+            jogadores[indiceJogador].numerosMarcados.push(numeroSorteado);
+            console.log(`${jogador.nome} marcou o número ${numeroSorteado}!`);
+            verificarMarcacao(indiceJogador + 1, numeroSorteado);
+        } else if (resposta === "N" || resposta === "n") {
+            console.log(`${jogador.nome} não marcou.`);
+            verificarMarcacao(indiceJogador + 1, numeroSorteado);
+        } else {
+            console.log("Resposta inválida! Digite apenas S/s ou N/n.");
+            verificarMarcacao(indiceJogador, numeroSorteado);
+        }
+    });
 }
+
+console.log(`Bem-vindo ao ${NOME_EVENTO}`);
+rl.question("Me diga o número de pessoas que irão jogar: ", function (numPessoas) {
+    let totalJogadores = Number(numPessoas);
+
+    if (isNaN(totalJogadores) || totalJogadores <= 0) {
+        console.log("Por favor, insira um número válido de jogadores.");
+        rl.close();
+        return;
+    }
+    pedirNomeJogador(totalJogadores);
+});
